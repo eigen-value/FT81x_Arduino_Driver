@@ -134,7 +134,7 @@ void FT81x::begin() {
 #endif
 
     initFT81x();
-    initDisplay();
+    //initDisplay();
 }
 
 void FT81x::initFT81x() {
@@ -171,6 +171,8 @@ void FT81x::initFT81x() {
     write16(FT81x_REG_VSYNC1, 8 + 8);
     write16(FT81x_REG_VSIZE, DISPLAY_HEIGHT);
 
+    write16(FT81x_REG_OUTBITS, 0x01B6); /* RGB 565 */
+
     write8(FT81x_REG_SWIZZLE, 2);
     write8(FT81x_REG_PCLK_POL, 0);
     write8(FT81x_REG_CSPREAD, 1);
@@ -183,7 +185,7 @@ void FT81x::initFT81x() {
     swapScreen();
 
     // enable pixel clock
-    write8(FT81x_REG_PCLK, 3);
+    write8(FT81x_REG_PCLK, 5);
 
     // reset display on GPIO3
     FT81x::write16(FT81x_REG_GPIOX_DIR, 0x8 | FT81x::read16(FT81x_REG_GPIOX_DIR));
